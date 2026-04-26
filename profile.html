@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .profile {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: auto;
+            max-width: 500px;
+            transition: transform 0.2s;
+        }
+        .profile:hover {
+            transform: scale(1.03);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .stat {
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            padding: 10px;
+            flex: 1;
+            margin: 0 10px;
+            font-size: 1.2em;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile">
+        <h1>Profile of shareefshaji</h1>
+        <div class="stats">
+            <div class="stat">Followers: 100</div>
+            <div class="stat">Repositories: 50</div>
+            <div class="stat">Stars: 200</div>
+        </div>
+    </div>
+</body>
+</html>
