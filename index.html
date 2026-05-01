@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Hacker Dashboard Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Orbitron&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0a0e27;
+            color: #00fff0;
+            overflow-x: hidden;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #00ff41;
+        }
+        .typing {
+            font-size: 1.2em;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 4px solid #00ff41;
+            width: 0;
+            animation: typing 4s steps(30) forwards, blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #00ff41; }
+        }
+        .counter {
+            text-align: center;
+            font-size: 2em;
+        }
+        .terminal {
+            background: #0a0e27;
+            border: 1px solid #00ff41;
+            padding: 10px;
+            margin: 20px;
+            font-family: 'Courier Prime', monospace;
+            color: #00fff0;
+            animation: glow 1s infinite alternate;
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px #00ff41; }
+            100% { text-shadow: 0 0 20px #00ff41; }
+        }
+        .timeline {
+            margin: 20px;
+            position: relative;
+        }
+        .milestone {
+            position: relative;
+            padding: 10px;
+            margin: 10px 0;
+            color: #00fff0;
+            transition: transform 0.3s;
+        }
+        .milestone:hover {
+            transform: scale(1.05);
+        }
+        .skills {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .skill {
+            width: 100px;
+            text-align: center;
+        }
+        .project {
+            border: 2px solid #00ff41;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .project:hover {
+            border-color: #00fff0;
+            box-shadow: 0 0 10px #00ff41;
+        }
+        .contact {
+            text-align: center;
+            margin: 20px;
+        }
+        button {
+            background-color: #00ff41;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #0a0e27;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #00fff0;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="typing">Welcome to My Futuristic Hacker Dashboard</h1>
+    <div class="counter">
+        <p>Age: <span id="age">29</span> years</p>
+        <p>Days Lived: <span id="daysLived">10,952</span> days</p>
+    </div>
+    <div class="terminal">
+        <p>~$ Welcome to my portfolio!</p>
+        <p>~$ Current projects: ...</p>
+    </div>
+    <div class="timeline">
+        <h2>Life Milestones</h2>
+        <div class="milestone">1996: Born</div>
+        <div class="milestone">2014: Started Coding</div>
+        <div class="milestone">2020: Graduated</div>
+        <div class="milestone">2021: Joined GitHub</div>
+        <div class="milestone">2023: Current Projects</div>
+    </div>
+    <div class="skills">
+        <div class="skill">HTML</div>
+        <div class="skill">CSS</div>
+        <div class="skill">JavaScript</div>
+        <div class="skill">React</div>
+    </div>
+    <div class="projects">
+        <h2>Project Showcase</h2>
+        <div class="project">Project 1</div>
+        <div class="project">Project 2</div>
+        <div class="project">Project 3</div>
+    </div>
+    <div class="contact">
+        <button onclick="window.location.href='https://wa.me/your_number'">WhatsApp</button>
+        <button onclick="window.location.href='https://t.me/your_username'">Telegram</button>
+        <button onclick="window.location.href='https://github.com/shareefshaji'">GitHub</button>
+    </div>
+    <script>
+        // Live counter for days lived
+        const birthDate = new Date('1996-05-01');
+        const today = new Date();
+        const timeDiff = today - birthDate;
+        const daysLived = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        document.getElementById('daysLived').textContent = daysLived;
+    </script>
+</body>
+</html>
