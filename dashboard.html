@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard - ProfileLo with Chat</title>
+<title>Dashboard - ProfileLo with Live Chat</title>
 
 <style>
 * {
@@ -67,16 +67,6 @@ body {
   color: #0f172a;
 }
 
-.chat-btn {
-  background: #10b981;
-  border: none;
-  color: white;
-  padding: 8px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
 .profile-btn {
   background: linear-gradient(135deg, #38bdf8, #0284c7);
   border: none;
@@ -103,16 +93,16 @@ body {
   margin: 0 auto;
   padding: 30px;
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: 1fr 400px;
   gap: 30px;
 }
 
-/* Left Side - Items Section */
+/* Left Side */
 .items-section {
   min-width: 0;
 }
 
-/* Right Side - Chat Section */
+/* Right Side - Chat */
 .chat-section {
   background: rgba(255,255,255,0.05);
   border-radius: 20px;
@@ -149,6 +139,11 @@ body {
   border-radius: 50%;
   margin-right: 6px;
   animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .chat-messages {
@@ -193,7 +188,7 @@ body {
 }
 
 .message-info {
-  font-size: 11px;
+  font-size: 10px;
   margin: 4px 10px;
   color: #94a3b8;
 }
@@ -202,10 +197,7 @@ body {
   font-weight: bold;
   margin-right: 8px;
   color: #38bdf8;
-}
-
-.message-time {
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .chat-input-area {
@@ -239,11 +231,8 @@ body {
   color: white;
 }
 
-.typing-indicator {
-  font-size: 11px;
-  color: #94a3b8;
-  padding: 5px 20px;
-  font-style: italic;
+.chat-send-btn:hover {
+  background: #059669;
 }
 
 /* Welcome Header */
@@ -255,12 +244,6 @@ body {
   border: 1px solid rgba(255,255,255,0.1);
 }
 
-.welcome-header h1 {
-  font-size: 1.5rem;
-  margin-bottom: 5px;
-}
-
-/* Category Tabs */
 .category-tabs {
   display: flex;
   gap: 10px;
@@ -295,10 +278,9 @@ body {
   margin-left: auto;
 }
 
-/* Cards Grid */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
 }
 
@@ -374,7 +356,6 @@ body {
   width: 40px;
 }
 
-/* Modal */
 .modal {
   display: none;
   position: fixed;
@@ -412,24 +393,23 @@ body {
   margin-top: 20px;
 }
 
-.save-modal-btn {
+.save-modal-btn, .cancel-modal-btn {
   flex: 1;
-  background: #10b981;
-  color: white;
   padding: 10px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
+}
+
+.save-modal-btn {
+  background: #10b981;
+  color: white;
 }
 
 .cancel-modal-btn {
-  flex: 1;
   background: #64748b;
   color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
 /* Responsive */
@@ -437,7 +417,6 @@ body {
   .container {
     grid-template-columns: 1fr;
   }
-  
   .chat-section {
     position: static;
     height: 500px;
@@ -448,22 +427,11 @@ body {
   .navbar {
     flex-direction: column;
   }
-  
   .nav-links {
     justify-content: center;
   }
-  
   .container {
     padding: 20px;
-  }
-  
-  .category-tabs {
-    justify-content: center;
-  }
-  
-  .add-button {
-    margin-left: 0;
-    width: 100%;
   }
 }
 </style>
@@ -473,14 +441,14 @@ body {
 <div class="navbar">
   <div class="logo">ProfileLo</div>
   <div class="nav-links">
-    <button class="nav-btn active" onclick="window.location.href='dashboard.html'">🏠 Dashboard</button>
+    <button class="nav-btn active" onclick="location.reload()">🏠 Dashboard</button>
     <button class="profile-btn" onclick="window.location.href='profile.html'">👤 My Profile</button>
     <button class="logout-btn" onclick="logout()">🚪 Logout</button>
   </div>
 </div>
 
 <div class="container">
-  <!-- Left Side: Items Section -->
+  <!-- Left Side -->
   <div class="items-section">
     <div class="welcome-header">
       <h1>Welcome, <span id="welcomeName">User</span>! 👋</h1>
@@ -499,23 +467,21 @@ body {
     <div id="cardsGrid" class="cards-grid"></div>
   </div>
 
-  <!-- Right Side: Online Chat -->
+  <!-- Right Side - Live Chat -->
   <div class="chat-section">
     <div class="chat-header">
-      <h3>💬 Global Chat</h3>
+      <h3>💬 Live Global Chat</h3>
       <div class="online-count">
         <span class="online-status"></span>
-        <span id="onlineCount">0</span> users online
+        <span id="onlineCount">1</span> user online
       </div>
     </div>
     
     <div id="chatMessages" class="chat-messages">
       <div style="text-align: center; color: #94a3b8; padding: 20px;">
-        Loading chat...
+        💡 Send a message to start chatting!
       </div>
     </div>
-    
-    <div id="typingIndicator" class="typing-indicator"></div>
     
     <div class="chat-input-area">
       <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..." maxlength="500">
@@ -547,76 +513,51 @@ body {
 
 <script>
 // ============================================
-// CHAT SYSTEM - Cross Browser Communication
+// REAL-TIME CHAT USING BROADCAST CHANNEL API
 // ============================================
 
-// Store messages in localStorage (acts as database)
-let chatMessages = [];
-let onlineUsers = new Set();
-let currentUser = localStorage.getItem("userName") || "Guest";
-let typingTimeout = null;
+const currentUser = localStorage.getItem("userName") || "Guest";
+const userId = "user_" + Date.now() + "_" + Math.random().toString(36).substr(2, 6);
 
-// Generate unique user ID
-const userId = Math.random().toString(36).substr(2, 9);
+// Create Broadcast Channel for real-time communication
+const chatChannel = new BroadcastChannel('profilelo_chat');
 
-// Load chat messages
-function loadChatMessages() {
-  const stored = localStorage.getItem("global_chat_messages");
-  if (stored) {
-    chatMessages = JSON.parse(stored);
+let messages = [];
+
+// Load messages from localStorage
+function loadMessages() {
+  const saved = localStorage.getItem("chat_messages_global");
+  if (saved) {
+    messages = JSON.parse(saved);
   } else {
-    // Welcome messages
-    chatMessages = [
-      {
-        id: Date.now(),
-        userId: "system",
-        userName: "System",
-        message: "🎉 Welcome to Global Chat!",
-        timestamp: Date.now(),
-        type: "system"
-      },
-      {
-        id: Date.now() + 1,
-        userId: "system",
-        userName: "System",
-        message: "💬 You can chat with other users across different browsers!",
-        timestamp: Date.now(),
-        type: "system"
-      }
+    messages = [
+      { id: Date.now(), userId: "system", userName: "System", message: "🎉 Welcome to Live Chat!", timestamp: Date.now() },
+      { id: Date.now() + 1, userId: "system", userName: "System", message: "💬 Messages appear instantly across all tabs!", timestamp: Date.now() }
     ];
-    saveChatMessages();
+    saveMessages();
   }
-  renderChatMessages();
+  renderMessages();
 }
 
-// Save chat messages
-function saveChatMessages() {
-  // Keep only last 200 messages
-  if (chatMessages.length > 200) {
-    chatMessages = chatMessages.slice(-200);
-  }
-  localStorage.setItem("global_chat_messages", JSON.stringify(chatMessages));
+// Save messages
+function saveMessages() {
+  if (messages.length > 100) messages = messages.slice(-100);
+  localStorage.setItem("chat_messages_global", JSON.stringify(messages));
 }
 
 // Render messages
-function renderChatMessages() {
+function renderMessages() {
   const container = document.getElementById("chatMessages");
   if (!container) return;
   
-  if (chatMessages.length === 0) {
+  if (messages.length === 0) {
     container.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 20px;">No messages yet. Start the conversation!</div>';
     return;
   }
   
-  container.innerHTML = chatMessages.map(msg => {
-    if (msg.type === "system") {
-      return `
-        <div style="text-align: center; margin: 10px 0;">
-          <span style="background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; font-size: 11px; color: #94a3b8;">
-            ${msg.message}
-          </span>
-        </div>
-      `;
+  container.innerHTML = messages.map(msg => {
+    if (msg.userId === "system") {
+      return `<div style="text-align: center; margin: 5px 0;"><span style="background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; font-size: 11px;">${escapeHtml(msg.message)}</span></div>`;
     }
     
     const isOwn = msg.userId === userId;
@@ -627,14 +568,12 @@ function renderChatMessages() {
           ${escapeHtml(msg.message)}
         </div>
         <div class="message-info">
-          ${!isOwn ? '' : ''}
-          <span class="message-time">${new Date(msg.timestamp).toLocaleTimeString()}</span>
+          ${new Date(msg.timestamp).toLocaleTimeString()}
         </div>
       </div>
     `;
   }).join('');
   
-  // Auto scroll to bottom
   container.scrollTop = container.scrollHeight;
 }
 
@@ -653,95 +592,83 @@ function sendMessage() {
     timestamp: Date.now()
   };
   
-  chatMessages.push(newMessage);
-  saveChatMessages();
-  renderChatMessages();
+  messages.push(newMessage);
+  saveMessages();
+  renderMessages();
   input.value = "";
   
-  // Trigger storage event for other tabs
-  localStorage.setItem("chat_trigger", Date.now().toString());
+  // Broadcast to other tabs
+  chatChannel.postMessage({ type: 'new_message', message: newMessage });
+  
+  // Also send to Telegram as backup (optional)
+  sendToTelegram(message);
 }
 
-// Update online users count
-function updateOnlineUsers() {
-  const online = localStorage.getItem("online_users");
-  if (online) {
-    const users = JSON.parse(online);
-    // Remove users older than 30 seconds
-    const now = Date.now();
-    const activeUsers = users.filter(u => now - u.lastSeen < 30000);
-    onlineUsers = new Set(activeUsers.map(u => u.userId));
-    document.getElementById("onlineCount").innerText = onlineUsers.size;
+// Listen for messages from other tabs
+chatChannel.onmessage = (event) => {
+  if (event.data.type === 'new_message') {
+    // Add message from other tab
+    messages.push(event.data.message);
+    saveMessages();
+    renderMessages();
     
-    // Save filtered list
-    localStorage.setItem("online_users", JSON.stringify(activeUsers));
-  }
-}
-
-// Report online status
-function reportOnline() {
-  const onlineData = JSON.parse(localStorage.getItem("online_users") || "[]");
-  const existing = onlineData.find(u => u.userId === userId);
-  
-  if (existing) {
-    existing.lastSeen = Date.now();
-  } else {
-    onlineData.push({
-      userId: userId,
-      userName: currentUser,
-      lastSeen: Date.now()
-    });
-  }
-  
-  localStorage.setItem("online_users", JSON.stringify(onlineData));
-  updateOnlineUsers();
-}
-
-// Typing indicator
-let isTyping = false;
-document.getElementById("chatInput")?.addEventListener("input", () => {
-  if (!isTyping) {
-    isTyping = true;
-    localStorage.setItem("typing_user", currentUser);
-    localStorage.setItem("typing_time", Date.now().toString());
-  }
-  
-  clearTimeout(typingTimeout);
-  typingTimeout = setTimeout(() => {
-    isTyping = false;
-    localStorage.removeItem("typing_user");
-  }, 2000);
-});
-
-// Show typing indicator
-function showTypingIndicator() {
-  const typingUser = localStorage.getItem("typing_user");
-  const typingTime = localStorage.getItem("typing_time");
-  
-  if (typingUser && typingTime && (Date.now() - parseInt(typingTime) < 3000)) {
-    if (typingUser !== currentUser) {
-      document.getElementById("typingIndicator").innerHTML = `${escapeHtml(typingUser)} is typing...`;
-      return;
+    // Play notification sound (optional)
+    if (event.data.message.userId !== userId) {
+      // Visual notification
+      document.title = "💬 New message!";
+      setTimeout(() => { document.title = "Dashboard - ProfileLo"; }, 2000);
     }
   }
-  document.getElementById("typingIndicator").innerHTML = "";
+  
+  if (event.data.type === 'update_online') {
+    updateOnlineCount();
+  }
+};
+
+// Online users tracking
+let onlineUsers = new Set();
+
+function updateOnlineCount() {
+  // Add current user
+  onlineUsers.add(userId);
+  
+  // Clean old users (older than 10 seconds)
+  const now = Date.now();
+  const userTimes = JSON.parse(localStorage.getItem("chat_online_users") || "{}");
+  Object.keys(userTimes).forEach(uid => {
+    if (now - userTimes[uid] > 10000) {
+      delete userTimes[uid];
+      onlineUsers.delete(uid);
+    }
+  });
+  
+  // Update current user time
+  userTimes[userId] = now;
+  localStorage.setItem("chat_online_users", JSON.stringify(userTimes));
+  
+  document.getElementById("onlineCount").innerText = Object.keys(userTimes).length;
 }
 
-// Listen for changes from other tabs/windows
-window.addEventListener("storage", (e) => {
-  if (e.key === "global_chat_messages") {
-    loadChatMessages();
-  }
-  if (e.key === "online_users") {
-    updateOnlineUsers();
-  }
-  if (e.key === "typing_user") {
-    showTypingIndicator();
-  }
-  if (e.key === "chat_trigger") {
-    loadChatMessages();
-  }
-});
+// Send message to Telegram (optional feature)
+async function sendToTelegram(message) {
+  // This is optional - can send chat messages to Telegram too
+  console.log(`[Chat] ${currentUser}: ${message}`);
+}
+
+// Optional: Send system message when user joins
+function sendJoinMessage() {
+  const joinMessage = {
+    id: Date.now(),
+    userId: "system",
+    userName: "System",
+    message: `✨ ${currentUser} joined the chat`,
+    timestamp: Date.now()
+  };
+  messages.push(joinMessage);
+  saveMessages();
+  renderMessages();
+  chatChannel.postMessage({ type: 'new_message', message: joinMessage });
+}
 
 // ============================================
 // ITEMS MANAGEMENT
@@ -759,7 +686,8 @@ function loadItems() {
     items = [
       { id: 1, name: "GitHub", category: "website", url: "https://github.com", description: "Code hosting platform" },
       { id: 2, name: "@BotFather", category: "bot", url: "https://t.me/botfather", description: "Official Telegram bot creator" },
-      { id: 3, name: "Twitter", category: "social", url: "https://twitter.com", description: "Social media platform" }
+      { id: 3, name: "Twitter", category: "social", url: "https://twitter.com", description: "Social media platform" },
+      { id: 4, name: "VS Code", category: "tools", url: "https://code.visualstudio.com", description: "Code editor" }
     ];
     saveItems();
   }
@@ -871,14 +799,21 @@ function escapeHtml(text) {
 function loadUserData() {
   const name = localStorage.getItem("userName") || "User";
   document.getElementById("welcomeName").innerText = name;
-  currentUser = name;
 }
 
 function logout() {
-  // Remove from online users before logout
-  const onlineData = JSON.parse(localStorage.getItem("online_users") || "[]");
-  const filtered = onlineData.filter(u => u.userId !== userId);
-  localStorage.setItem("online_users", JSON.stringify(filtered));
+  // Send leave message
+  const leaveMessage = {
+    id: Date.now(),
+    userId: "system",
+    userName: "System",
+    message: `👋 ${currentUser} left the chat`,
+    timestamp: Date.now()
+  };
+  messages.push(leaveMessage);
+  saveMessages();
+  chatChannel.postMessage({ type: 'new_message', message: leaveMessage });
+  
   localStorage.removeItem("isLoggedIn");
   window.location.href = "index.html";
 }
@@ -893,7 +828,27 @@ if (localStorage.getItem("isLoggedIn") !== "true") {
 
 loadUserData();
 loadItems();
-loadChatMessages();
+loadMessages();
+
+// Update online status every 5 seconds
+updateOnlineCount();
+setInterval(() => {
+  updateOnlineCount();
+  chatChannel.postMessage({ type: 'update_online' });
+}, 5000);
+
+// Send join message (only once)
+if (!sessionStorage.getItem("join_sent")) {
+  setTimeout(() => {
+    sendJoinMessage();
+    sessionStorage.setItem("join_sent", "true");
+  }, 500);
+}
+
+// Enter key to send
+document.getElementById("chatInput")?.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") sendMessage();
+});
 
 // Category filters
 document.querySelectorAll('.category-tab').forEach(tab => {
@@ -905,19 +860,8 @@ document.querySelectorAll('.category-tab').forEach(tab => {
   });
 });
 
-// Online status reporting
-reportOnline();
-setInterval(() => {
-  reportOnline();
-  showTypingIndicator();
-}, 5000);
-
-// Enter key to send message
-document.getElementById("chatInput")?.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") sendMessage();
-});
-
-console.log("%c💬 Global Chat Active! Chat with other users across browsers!", "color: #10b981; font-size: 14px");
+console.log("%c💬 LIVE CHAT ACTIVE! Messages appear instantly across all tabs!", "color: #10b981; font-size: 14px");
+console.log("%c📝 Open this page in multiple tabs to test real-time chat", "color: #38bdf8; font-size: 12px");
 </script>
 </body>
 </html>
