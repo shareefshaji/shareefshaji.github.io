@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - ProfileLo with Chat</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  min-height: 100vh;
+  color: white;
+}
+
+/* Navigation Bar */
+.navbar {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(120deg, #38bdf8, #bae6fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid rgba(56,189,248,0.5);
+  color: #38bdf8;
+  padding: 8px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.nav-btn:hover, .nav-btn.active {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+.chat-btn {
+  background: #10b981;
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.profile-btn {
+  background: linear-gradient(135deg, #38bdf8, #0284c7);
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.logout-btn {
+  background: rgba(239,68,68,0.8);
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Main Container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 30px;
+}
+
+/* Left Side - Items Section */
+.items-section {
+  min-width: 0;
+}
+
+/* Right Side - Chat Section */
+.chat-section {
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+  position: sticky;
+  top: 90px;
+}
+
+.chat-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  border-radius: 20px 20px 0 0;
+}
+
+.chat-header h3 {
+  color: #10b981;
+  margin-bottom: 5px;
+}
+
+.online-count {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.online-status {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: pulse 2s infinite;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+}
+
+.message.sent {
+  align-self: flex-end;
+}
+
+.message.received {
+  align-self: flex-start;
+}
+
+.message-bubble {
+  padding: 10px 14px;
+  border-radius: 18px;
+  word-wrap: break-word;
+}
+
+.message.sent .message-bubble {
+  background: #38bdf8;
+  color: #0f172a;
+  border-bottom-right-radius: 4px;
+}
+
+.message.received .message-bubble {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border-bottom-left-radius: 4px;
+}
+
+.message-info {
+  font-size: 11px;
+  margin: 4px 10px;
+  color: #94a3b8;
+}
+
+.message-sender {
+  font-weight: bold;
+  margin-right: 8px;
+  color: #38bdf8;
+}
+
+.message-time {
+  font-size: 10px;
+}
+
+.chat-input-area {
+  padding: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  outline: none;
+}
+
+.chat-input::placeholder {
+  color: #94a3b8;
+}
+
+.chat-send-btn {
+  background: #10b981;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+
+.typing-indicator {
+  font-size: 11px;
+  color: #94a3b8;
+  padding: 5px 20px;
+  font-style: italic;
+}
+
+/* Welcome Header */
+.welcome-header {
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.welcome-header h1 {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+/* Category Tabs */
+.category-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.category-tab {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #94a3b8;
+  padding: 8px 20px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: bold;
+}
+
+.category-tab:hover, .category-tab.active {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+.add-button {
+  background: #10b981;
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 40px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: auto;
+}
+
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.08);
+  border-color: #38bdf8;
+}
+
+.card-category {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.category-website { background: #3b82f6; }
+.category-bot { background: #10b981; }
+.category-social { background: #ef4444; }
+.category-tools { background: #8b5cf6; }
+.category-other { background: #6b7280; }
+
+.card-title {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.card-description {
+  color: #94a3b8;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.card-url {
+  color: #38bdf8;
+  font-size: 11px;
+  word-break: break-all;
+  margin-bottom: 12px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.open-btn {
+  flex: 1;
+  background: #38bdf8;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.delete-btn {
+  background: rgba(239,68,68,0.8);
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  width: 40px;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+}
+
+.modal-content input, .modal-content select, .modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.9);
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-modal-btn {
+  flex: 1;
+  background: #10b981;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cancel-modal-btn {
+  flex: 1;
+  background: #64748b;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  
+  .chat-section {
+    position: static;
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+  }
+  
+  .nav-links {
+    justify-content: center;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .category-tabs {
+    justify-content: center;
+  }
+  
+  .add-button {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">ProfileLo</div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="window.location.href='dashboard.html'">🏠 Dashboard</button>
+    <button class="profile-btn" onclick="window.location.href='profile.html'">👤 My Profile</button>
+    <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Left Side: Items Section -->
+  <div class="items-section">
+    <div class="welcome-header">
+      <h1>Welcome, <span id="welcomeName">User</span>! 👋</h1>
+      <p>Manage your favorite websites and Telegram bots</p>
+    </div>
+
+    <div class="category-tabs">
+      <button class="category-tab active" data-category="all">📌 All</button>
+      <button class="category-tab" data-category="website">🌐 Websites</button>
+      <button class="category-tab" data-category="bot">🤖 Telegram Bots</button>
+      <button class="category-tab" data-category="social">📱 Social</button>
+      <button class="category-tab" data-category="tools">🛠️ Tools</button>
+      <button class="add-button" onclick="openAddModal()">+ Add Item</button>
+    </div>
+
+    <div id="cardsGrid" class="cards-grid"></div>
+  </div>
+
+  <!-- Right Side: Online Chat -->
+  <div class="chat-section">
+    <div class="chat-header">
+      <h3>💬 Global Chat</h3>
+      <div class="online-count">
+        <span class="online-status"></span>
+        <span id="onlineCount">0</span> users online
+      </div>
+    </div>
+    
+    <div id="chatMessages" class="chat-messages">
+      <div style="text-align: center; color: #94a3b8; padding: 20px;">
+        Loading chat...
+      </div>
+    </div>
+    
+    <div id="typingIndicator" class="typing-indicator"></div>
+    
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..." maxlength="500">
+      <button class="chat-send-btn" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="itemModal" class="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle">Add New Item</h3>
+    <input type="text" id="itemName" placeholder="Name">
+    <select id="itemCategory">
+      <option value="website">🌐 Website</option>
+      <option value="bot">🤖 Telegram Bot</option>
+      <option value="social">📱 Social Media</option>
+      <option value="tools">🛠️ Tools</option>
+      <option value="other">📦 Other</option>
+    </select>
+    <input type="text" id="itemUrl" placeholder="URL or Bot Username">
+    <textarea id="itemDescription" placeholder="Description"></textarea>
+    <div class="modal-buttons">
+      <button class="save-modal-btn" onclick="saveItem()">Save</button>
+      <button class="cancel-modal-btn" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================
+// CHAT SYSTEM - Cross Browser Communication
+// ============================================
+
+// Store messages in localStorage (acts as database)
+let chatMessages = [];
+let onlineUsers = new Set();
+let currentUser = localStorage.getItem("userName") || "Guest";
+let typingTimeout = null;
+
+// Generate unique user ID
+const userId = Math.random().toString(36).substr(2, 9);
+
+// Load chat messages
+function loadChatMessages() {
+  const stored = localStorage.getItem("global_chat_messages");
+  if (stored) {
+    chatMessages = JSON.parse(stored);
+  } else {
+    // Welcome messages
+    chatMessages = [
+      {
+        id: Date.now(),
+        userId: "system",
+        userName: "System",
+        message: "🎉 Welcome to Global Chat!",
+        timestamp: Date.now(),
+        type: "system"
+      },
+      {
+        id: Date.now() + 1,
+        userId: "system",
+        userName: "System",
+        message: "💬 You can chat with other users across different browsers!",
+        timestamp: Date.now(),
+        type: "system"
+      }
+    ];
+    saveChatMessages();
+  }
+  renderChatMessages();
+}
+
+// Save chat messages
+function saveChatMessages() {
+  // Keep only last 200 messages
+  if (chatMessages.length > 200) {
+    chatMessages = chatMessages.slice(-200);
+  }
+  localStorage.setItem("global_chat_messages", JSON.stringify(chatMessages));
+}
+
+// Render messages
+function renderChatMessages() {
+  const container = document.getElementById("chatMessages");
+  if (!container) return;
+  
+  if (chatMessages.length === 0) {
+    container.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 20px;">No messages yet. Start the conversation!</div>';
+    return;
+  }
+  
+  container.innerHTML = chatMessages.map(msg => {
+    if (msg.type === "system") {
+      return `
+        <div style="text-align: center; margin: 10px 0;">
+          <span style="background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; font-size: 11px; color: #94a3b8;">
+            ${msg.message}
+          </span>
+        </div>
+      `;
+    }
+    
+    const isOwn = msg.userId === userId;
+    return `
+      <div class="message ${isOwn ? 'sent' : 'received'}">
+        <div class="message-bubble">
+          ${!isOwn ? `<span class="message-sender">${escapeHtml(msg.userName)}</span><br>` : ''}
+          ${escapeHtml(msg.message)}
+        </div>
+        <div class="message-info">
+          ${!isOwn ? '' : ''}
+          <span class="message-time">${new Date(msg.timestamp).toLocaleTimeString()}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  // Auto scroll to bottom
+  container.scrollTop = container.scrollHeight;
+}
+
+// Send message
+function sendMessage() {
+  const input = document.getElementById("chatInput");
+  const message = input.value.trim();
+  
+  if (!message) return;
+  
+  const newMessage = {
+    id: Date.now(),
+    userId: userId,
+    userName: currentUser,
+    message: message,
+    timestamp: Date.now()
+  };
+  
+  chatMessages.push(newMessage);
+  saveChatMessages();
+  renderChatMessages();
+  input.value = "";
+  
+  // Trigger storage event for other tabs
+  localStorage.setItem("chat_trigger", Date.now().toString());
+}
+
+// Update online users count
+function updateOnlineUsers() {
+  const online = localStorage.getItem("online_users");
+  if (online) {
+    const users = JSON.parse(online);
+    // Remove users older than 30 seconds
+    const now = Date.now();
+    const activeUsers = users.filter(u => now - u.lastSeen < 30000);
+    onlineUsers = new Set(activeUsers.map(u => u.userId));
+    document.getElementById("onlineCount").innerText = onlineUsers.size;
+    
+    // Save filtered list
+    localStorage.setItem("online_users", JSON.stringify(activeUsers));
+  }
+}
+
+// Report online status
+function reportOnline() {
+  const onlineData = JSON.parse(localStorage.getItem("online_users") || "[]");
+  const existing = onlineData.find(u => u.userId === userId);
+  
+  if (existing) {
+    existing.lastSeen = Date.now();
+  } else {
+    onlineData.push({
+      userId: userId,
+      userName: currentUser,
+      lastSeen: Date.now()
+    });
+  }
+  
+  localStorage.setItem("online_users", JSON.stringify(onlineData));
+  updateOnlineUsers();
+}
+
+// Typing indicator
+let isTyping = false;
+document.getElementById("chatInput")?.addEventListener("input", () => {
+  if (!isTyping) {
+    isTyping = true;
+    localStorage.setItem("typing_user", currentUser);
+    localStorage.setItem("typing_time", Date.now().toString());
+  }
+  
+  clearTimeout(typingTimeout);
+  typingTimeout = setTimeout(() => {
+    isTyping = false;
+    localStorage.removeItem("typing_user");
+  }, 2000);
+});
+
+// Show typing indicator
+function showTypingIndicator() {
+  const typingUser = localStorage.getItem("typing_user");
+  const typingTime = localStorage.getItem("typing_time");
+  
+  if (typingUser && typingTime && (Date.now() - parseInt(typingTime) < 3000)) {
+    if (typingUser !== currentUser) {
+      document.getElementById("typingIndicator").innerHTML = `${escapeHtml(typingUser)} is typing...`;
+      return;
+    }
+  }
+  document.getElementById("typingIndicator").innerHTML = "";
+}
+
+// Listen for changes from other tabs/windows
+window.addEventListener("storage", (e) => {
+  if (e.key === "global_chat_messages") {
+    loadChatMessages();
+  }
+  if (e.key === "online_users") {
+    updateOnlineUsers();
+  }
+  if (e.key === "typing_user") {
+    showTypingIndicator();
+  }
+  if (e.key === "chat_trigger") {
+    loadChatMessages();
+  }
+});
+
+// ============================================
+// ITEMS MANAGEMENT
+// ============================================
+
+let items = [];
+let currentEditId = null;
+let currentCategory = "all";
+
+function loadItems() {
+  const saved = localStorage.getItem("userItems");
+  if (saved) {
+    items = JSON.parse(saved);
+  } else {
+    items = [
+      { id: 1, name: "GitHub", category: "website", url: "https://github.com", description: "Code hosting platform" },
+      { id: 2, name: "@BotFather", category: "bot", url: "https://t.me/botfather", description: "Official Telegram bot creator" },
+      { id: 3, name: "Twitter", category: "social", url: "https://twitter.com", description: "Social media platform" }
+    ];
+    saveItems();
+  }
+  renderItems();
+}
+
+function saveItems() {
+  localStorage.setItem("userItems", JSON.stringify(items));
+}
+
+function renderItems() {
+  const grid = document.getElementById("cardsGrid");
+  let filtered = currentCategory === "all" ? items : items.filter(i => i.category === currentCategory);
+  
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="text-align: center; padding: 40px; color: #94a3b8;">No items. Click "Add Item" to get started!</div>';
+    return;
+  }
+  
+  grid.innerHTML = filtered.map(item => `
+    <div class="card">
+      <div class="card-category category-${item.category}">${getCategoryIcon(item.category)} ${getCategoryName(item.category)}</div>
+      <div class="card-title">${escapeHtml(item.name)}</div>
+      <div class="card-description">${escapeHtml(item.description || 'No description')}</div>
+      <div class="card-url">${escapeHtml(item.url)}</div>
+      <div class="card-actions">
+        <button class="open-btn" onclick="openItem('${item.url}')">🔗 Open</button>
+        <button class="delete-btn" onclick="deleteItem(${item.id})">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getCategoryIcon(cat) {
+  const icons = { website: "🌐", bot: "🤖", social: "📱", tools: "🛠️", other: "📦" };
+  return icons[cat] || "📌";
+}
+
+function getCategoryName(cat) {
+  const names = { website: "Website", bot: "Telegram Bot", social: "Social", tools: "Tools", other: "Other" };
+  return names[cat] || cat;
+}
+
+function openItem(url) {
+  if (url.startsWith('@')) {
+    window.open(`https://t.me/${url.substring(1)}`, '_blank');
+  } else {
+    window.open(url, '_blank');
+  }
+}
+
+function openAddModal() {
+  currentEditId = null;
+  document.getElementById("modalTitle").innerText = "Add New Item";
+  document.getElementById("itemName").value = "";
+  document.getElementById("itemCategory").value = "website";
+  document.getElementById("itemUrl").value = "";
+  document.getElementById("itemDescription").value = "";
+  document.getElementById("itemModal").style.display = "flex";
+}
+
+function saveItem() {
+  const name = document.getElementById("itemName").value.trim();
+  const category = document.getElementById("itemCategory").value;
+  const url = document.getElementById("itemUrl").value.trim();
+  const description = document.getElementById("itemDescription").value.trim();
+  
+  if (!name || !url) {
+    alert("Please fill name and URL");
+    return;
+  }
+  
+  if (currentEditId) {
+    const index = items.findIndex(i => i.id === currentEditId);
+    if (index !== -1) {
+      items[index] = { ...items[index], name, category, url, description };
+    }
+  } else {
+    items.push({ id: Date.now(), name, category, url, description });
+  }
+  
+  saveItems();
+  renderItems();
+  closeModal();
+}
+
+function deleteItem(id) {
+  if (confirm("Delete this item?")) {
+    items = items.filter(i => i.id !== id);
+    saveItems();
+    renderItems();
+  }
+}
+
+function closeModal() {
+  document.getElementById("itemModal").style.display = "none";
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// ============================================
+// GENERAL FUNCTIONS
+// ============================================
+
+function loadUserData() {
+  const name = localStorage.getItem("userName") || "User";
+  document.getElementById("welcomeName").innerText = name;
+  currentUser = name;
+}
+
+function logout() {
+  // Remove from online users before logout
+  const onlineData = JSON.parse(localStorage.getItem("online_users") || "[]");
+  const filtered = onlineData.filter(u => u.userId !== userId);
+  localStorage.setItem("online_users", JSON.stringify(filtered));
+  localStorage.removeItem("isLoggedIn");
+  window.location.href = "index.html";
+}
+
+// ============================================
+// INITIALIZATION
+// ============================================
+
+if (localStorage.getItem("isLoggedIn") !== "true") {
+  window.location.href = "index.html";
+}
+
+loadUserData();
+loadItems();
+loadChatMessages();
+
+// Category filters
+document.querySelectorAll('.category-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentCategory = tab.dataset.category;
+    renderItems();
+  });
+});
+
+// Online status reporting
+reportOnline();
+setInterval(() => {
+  reportOnline();
+  showTypingIndicator();
+}, 5000);
+
+// Enter key to send message
+document.getElementById("chatInput")?.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") sendMessage();
+});
+
+console.log("%c💬 Global Chat Active! Chat with other users across browsers!", "color: #10b981; font-size: 14px");
+</script>
+</body>
+</html>

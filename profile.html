@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile - ProfileLo</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  min-height: 100vh;
+  color: white;
+}
+
+.navbar {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(120deg, #38bdf8, #bae6fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid rgba(56,189,248,0.5);
+  color: #38bdf8;
+  padding: 8px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.nav-btn:hover {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+.profile-btn {
+  background: linear-gradient(135deg, #38bdf8, #0284c7);
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.logout-btn {
+  background: rgba(239,68,68,0.8);
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 30px;
+}
+
+.profile-header {
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 30px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #38bdf8, #0284c7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  margin: 0 auto 20px;
+  border: 3px solid rgba(255,255,255,0.3);
+}
+
+#profileName {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+#profileEmail {
+  color: #94a3b8;
+  margin-bottom: 20px;
+}
+
+.edit-btn {
+  background: #38bdf8;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.section {
+  background: rgba(255,255,255,0.05);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.section h3 {
+  color: #38bdf8;
+  margin-bottom: 15px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.info-label {
+  font-weight: bold;
+  color: #94a3b8;
+}
+
+.info-value {
+  color: white;
+}
+
+.edit-form {
+  display: none;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.edit-form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.9);
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.save-btn {
+  flex: 1;
+  background: #10b981;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  flex: 1;
+  background: #64748b;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+  .nav-links {
+    justify-content: center;
+  }
+  .container {
+    padding: 20px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">ProfileLo</div>
+  <div class="nav-links">
+    <button class="nav-btn" onclick="window.location.href='dashboard.html'">🏠 Dashboard</button>
+    <button class="profile-btn" onclick="window.location.href='profile.html'">👤 My Profile</button>
+    <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="profile-header">
+    <div class="avatar" id="avatar">👤</div>
+    <h2 id="profileName">Loading...</h2>
+    <p id="profileEmail">Loading...</p>
+    <button class="edit-btn" onclick="showEditForm()">✏️ Edit Profile</button>
+    
+    <div class="edit-form" id="editForm">
+      <input type="text" id="editName" placeholder="Full Name">
+      <input type="email" id="editEmail" placeholder="Email">
+      <div class="edit-buttons">
+        <button class="save-btn" onclick="saveProfile()">💾 Save</button>
+        <button class="cancel-btn" onclick="hideEditForm()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>📊 Statistics</h3>
+    <div class="info-row">
+      <span class="info-label">Total Items Saved:</span>
+      <span class="info-value" id="totalItems">0</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Total Logins:</span>
+      <span class="info-value" id="totalLogins">0</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Last Login:</span>
+      <span class="info-value" id="lastLogin">-</span>
+    </div>
+  </div>
+</div>
+
+<script>
+function loadProfile() {
+  const name = localStorage.getItem("userName") || "Guest";
+  const email = localStorage.getItem("userEmail") || "guest@example.com";
+  
+  document.getElementById("profileName").innerText = name;
+  document.getElementById("profileEmail").innerText = email;
+  document.getElementById("avatar").innerText = name.charAt(0).toUpperCase();
+  
+  // Load stats
+  const items = JSON.parse(localStorage.getItem("userItems") || "[]");
+  document.getElementById("totalItems").innerText = items.length;
+  document.getElementById("totalLogins").innerText = localStorage.getItem("loginCount") || "1";
+  
+  const lastLogin = localStorage.getItem("lastLoginTime");
+  if (lastLogin) {
+    document.getElementById("lastLogin").innerText = new Date(lastLogin).toLocaleString();
+  }
+}
+
+function showEditForm() {
+  document.getElementById("editForm").style.display = "block";
+  document.getElementById("editName").value = localStorage.getItem("userName") || "";
+  document.getElementById("editEmail").value = localStorage.getItem("userEmail") || "";
+}
+
+function hideEditForm() {
+  document.getElementById("editForm").style.display = "none";
+}
+
+function saveProfile() {
+  const newName = document.getElementById("editName").value.trim();
+  const newEmail = document.getElementById("editEmail").value.trim();
+  
+  if (newName && newName.length >= 2) {
+    localStorage.setItem("userName", newName);
+  }
+  if (newEmail && newEmail.includes("@")) {
+    localStorage.setItem("userEmail", newEmail);
+  }
+  
+  hideEditForm();
+  loadProfile();
+}
+
+function logout() {
+  localStorage.removeItem("isLoggedIn");
+  window.location.href = "index.html";
+}
+
+if (localStorage.getItem("isLoggedIn") !== "true") {
+  window.location.href = "index.html";
+}
+
+loadProfile();
+</script>
+</body>
+</html>

