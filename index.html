@@ -1,52 +1,160 @@
-<h1 align="center">Hi, I'm Shareef Shaji</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProfileLo</title>
 
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=500&size=24&pause=1000&color=0E75B6&center=true&vCenter=true&width=700&lines=Full-Stack+Developer;Clean+Code+%7C+Real+World+Solutions;Always+Learning+New+Technologies" alt="Typing animation" />
-</p>
+<style>
+*{
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+  box-sizing:border-box;
+}
 
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=shareefshaji&label=Profile+Views&color=0e75b6&style=for-the-badge" alt="Profile views" />
-  <img src="https://img.shields.io/github/followers/shareefshaji?label=Followers&style=for-the-badge" alt="GitHub followers" />
-</p>
+body{
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  color:white;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
 
-## About Me
+/* LOGIN BOX */
+.container{
+  width:320px;
+  padding:20px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  border-radius:15px;
+  box-shadow:0 0 20px rgba(0,0,0,0.5);
+  transition:0.5s;
+}
 
-- Passionate about software development and continuous learning
-- Focused on maintainable, scalable, and readable code
-- Interested in modern web development, automation, and problem solving
-- Open to collaborating on impactful projects
+h2{
+  text-align:center;
+  margin-bottom:15px;
+}
 
-## Tech Stack
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:none;
+  border-radius:8px;
+  outline:none;
+}
 
-<p>
-  <img src="https://skillicons.dev/icons?i=js,ts,python,java,html,css,react,nextjs,nodejs,express,mongodb,mysql,postgres,docker,git,github,vscode" />
-</p>
+button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  border-radius:8px;
+  background:#38bdf8;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-## Animated GitHub Insights
+button:hover{
+  background:#0ea5e9;
+}
 
-<p align="center">
-  <img height="170" src="https://github-readme-stats.vercel.app/api?username=shareefshaji&show_icons=true&theme=tokyonight&hide_border=true&rank_icon=github" alt="GitHub stats" />
-  <img height="170" src="https://github-readme-streak-stats.herokuapp.com/?user=shareefshaji&theme=tokyonight&hide_border=true" alt="GitHub streak" />
-</p>
+/* PROFILE */
+.profile{
+  display:none;
+  text-align:center;
+}
 
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=shareefshaji&theme=tokyo-night&hide_border=true&area=true" alt="Contribution graph" />
-</p>
+.avatar{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  background:#38bdf8;
+  margin:10px auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:30px;
+  font-weight:bold;
+  color:black;
+}
 
-## Featured Work
+.card{
+  margin-top:10px;
+  padding:10px;
+  background:rgba(255,255,255,0.1);
+  border-radius:10px;
+}
+</style>
 
-- Full-stack web applications
-- API design and backend services
-- Productivity and automation tools
-- Real-world problem-solving projects
+</head>
 
-> Add your top repositories here with one-line descriptions and links.
+<body>
 
-## Connect With Me
+<div class="container" id="loginBox">
+  <h2>ProfileLo Login</h2>
 
-- **Email:** your-email@example.com
-- **LinkedIn:** [linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)
+  <input type="text" id="name" placeholder="Enter Name">
+  <input type="email" id="email" placeholder="Enter Email">
+  <input type="password" id="pass" placeholder="Password">
 
----
+  <button onclick="login()">Login</button>
+</div>
 
-<p align="center"><i>Let's build something meaningful together.</i></p>
+<div class="container profile" id="profileBox">
+  <div class="avatar" id="avatar">U</div>
+  <h2 id="pname">User</h2>
+  <p id="pemail">email</p>
+
+  <div class="card">
+    🚀 Welcome to ProfileLo Dashboard
+  </div>
+
+  <button onclick="logout()">Logout</button>
+</div>
+
+<script>
+function login(){
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+
+  if(name === "" || email === ""){
+    alert("Fill all fields");
+    return;
+  }
+
+  localStorage.setItem("name", name);
+  localStorage.setItem("email", email);
+
+  showProfile();
+}
+
+function showProfile(){
+  document.getElementById("loginBox").style.display="none";
+  document.getElementById("profileBox").style.display="block";
+
+  let name = localStorage.getItem("name");
+  let email = localStorage.getItem("email");
+
+  document.getElementById("pname").innerText = name;
+  document.getElementById("pemail").innerText = email;
+  document.getElementById("avatar").innerText = name.charAt(0).toUpperCase();
+}
+
+function logout(){
+  localStorage.clear();
+  location.reload();
+}
+
+if(localStorage.getItem("name")){
+  showProfile();
+}
+</script>
+
+</body>
+</html>
